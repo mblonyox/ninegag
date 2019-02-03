@@ -4,7 +4,8 @@
     <b-row>
       <b-col
         align-h="center"
-        lg="7"
+        lg="8"
+        class="px-0"
       >
         <card-content
           v-for="post in posts"
