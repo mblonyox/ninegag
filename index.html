@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>ninegag</title>
+    <meta name="Description" content="9GAG served by mblonyox.">
+
+    <link rel="manifest" href="<%= htmlWebpackPlugin.files.publicPath %>static/manifest.json">
+    <meta name="theme-color" content="#212529">
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      This application can only be viewed using JavaScript enabled.
+    </div>
+    <!-- Todo: only include in production -->
+    <%= htmlWebpackPlugin.options.serviceWorkerLoader %>
     <!-- built files will be auto injected -->
   </body>
 </html>
