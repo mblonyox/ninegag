@@ -10,7 +10,7 @@
             ref="video"
             controls
             :poster="post.images.image460.url"
-            onclick="this.paused ? this.play() : this.pause();"
+            onclick.prevent="this.paused ? this.play() : this.pause();"
             v-observe-visibility="visibilityChanged"
           >
             <source :src="post.images.image460sv.vp9Url" v-if="!!post.images.image460sv.vp9Url" type="video/webm">
