@@ -7,8 +7,8 @@
         class="px-0"
       >
         <b-row align-h="between">
-          <b-col cols="2"><b-button block :to="{name: 'PageIndex'}">⮤ Home</b-button></b-col>
-          <b-col cols="2"><b-button block variant="primary" @click.prevent="nextPost">Next 🠚</b-button></b-col>
+          <b-col cols="5" sm="4" md="3"><b-button block :to="{name: 'PageIndex'}">🏠 Home</b-button></b-col>
+          <b-col cols="5" sm="4" md="3"><b-button block variant="primary" @click.prevent="nextPost">Next ➡️</b-button></b-col>
         </b-row>
         <card-content :post="post" v-if="!!post"/>
         <b-card class="my-5" v-else>
