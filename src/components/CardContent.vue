@@ -31,7 +31,7 @@
         />
         <div>
           <b-badge
-            pill="true"
+            pill
             v-for="tag in post.tags"
             :key="tag.url"
             class="m-1"

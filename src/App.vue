@@ -7,7 +7,7 @@
       </b-container>
     </b-navbar>
     <b-container>
-      <router-view/>
+      <router-view :key="$route.query.after"/>
     </b-container>
   </div>
 </template>

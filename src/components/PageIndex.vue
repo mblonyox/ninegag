@@ -32,12 +32,19 @@ export default {
       fetch('/api.php/v1/group-posts/group/default/type/hot?' + this.cursor)
         .then(res => res.json())
         .then(res => {
-          console.log(res)
-          this.posts = this.posts.concat(res.data.posts)
-          this.cursor = res.data.nextCursor
-          $state.loaded()
+          if (this.posts.length > 20) {
+            const query = new URLSearchParams(this.cursor)
+            this.$router.push({query: { after: query.get('after'), c: query.get('c') }})
+          } else {
+            this.posts = this.posts.concat(res.data.posts)
+            this.cursor = res.data.nextCursor
+            $state.loaded()
+          }
         })
     }
+  },
+  created () {
+    this.cursor = `after=${this.$route.query.after}&c=${this.$route.query.c}`
   },
   components: {
     InfiniteLoading,
