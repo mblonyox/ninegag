@@ -1,8 +1,9 @@
 <template>
   <b-card
-    :title="post.title"
     class="my-5"
   >
+    <b-card-sub-title><img :src="post.postSection.imageUrl" :alt="post.postSection.name" style="height: 1.5em;"> {{post.postSection.name}}</b-card-sub-title>
+    <b-card-title class="mt-2">{{post.title}}</b-card-title>
     <b-row>
       <b-col class="px-0">
         <div class="video-wrapper" v-if="post.type === 'Animated'">
@@ -34,13 +35,14 @@
             pill
             v-for="tag in post.tags"
             :key="tag.url"
-            class="m-1"
+            class="m-1 p-2"
           >
             {{tag.key}}
           </b-badge>
         </div>
       </b-col>
     </b-row>
+
   </b-card>
 </template>
 
