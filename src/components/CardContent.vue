@@ -3,7 +3,7 @@
     class="my-5"
   >
     <b-card-sub-title><img :src="post.postSection.imageUrl" :alt="post.postSection.name" style="height: 1.5em;"> {{post.postSection.name}}</b-card-sub-title>
-    <b-card-title class="mt-2">{{post.title}}</b-card-title>
+    <b-card-title class="mt-2"><b-link :to="{name: 'PagePost', params: {id: post.id}}" v-html="post.title"/></b-card-title>
     <b-row>
       <b-col class="px-0">
         <div class="video-wrapper" v-if="post.type === 'Animated'">
@@ -42,7 +42,11 @@
         </div>
       </b-col>
     </b-row>
-
+    <div class="my-2">
+      <b-button variant="outline-success">{{post.upVoteCount}} 👍</b-button>
+      <b-button variant="outline-danger">{{post.downVoteCount}} 👎</b-button>
+      <b-button variant="outline-primary">{{post.commentsCount}} 💬</b-button>
+    </div>
   </b-card>
 </template>
 

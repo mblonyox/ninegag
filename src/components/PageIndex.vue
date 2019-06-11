@@ -12,7 +12,11 @@
           :post="post"
           :key="post.id"
         />
-        <infinite-loading @infinite="infiniteHandler"/>
+        <infinite-loading @infinite="infiniteHandler">
+          <div slot="no-more">
+            <b-button block :to="{query: {after}}">More...</b-button>
+          </div>
+        </infinite-loading>
       </b-col>
     </b-row>
   </b-card>
@@ -27,19 +31,20 @@ export default {
     posts: [],
     cursor: ''
   }),
+  computed: {
+    after () {
+      return (new URLSearchParams(this.cursor)).get('after')
+    }
+  },
   methods: {
     infiniteHandler ($state) {
+      if (this.posts.length > 20) return $state.complete()
       fetch('/api.php/v1/group-posts/group/default/type/hot?' + this.cursor)
         .then(res => res.json())
         .then(res => {
-          if (this.posts.length > 20) {
-            const query = new URLSearchParams(this.cursor)
-            this.$router.push({query: { after: query.get('after'), c: query.get('c') }})
-          } else {
-            this.posts = this.posts.concat(res.data.posts)
-            this.cursor = res.data.nextCursor
-            $state.loaded()
-          }
+          this.posts = this.posts.concat(res.data.posts)
+          this.cursor = res.data.nextCursor
+          $state.loaded()
         })
     }
   },
