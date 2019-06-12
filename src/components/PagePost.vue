@@ -16,6 +16,7 @@
             <b-spinner label="Loading..."/>
           </div>
         </b-card>
+        <post-comments :id="id"></post-comments>
       </b-col>
     </b-row>
   </b-card>
@@ -23,6 +24,7 @@
 
 <script>
 import CardContent from './CardContent'
+import PostComments from './PostComments'
 
 export default {
   data: () => ({
@@ -51,6 +53,6 @@ export default {
     this.getPosts()
   },
   props: ['id'],
-  components: {CardContent}
+  components: {CardContent, PostComments}
 }
 </script>
