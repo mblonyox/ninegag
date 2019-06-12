@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api.php': {
+      '/*.php/**': {
         target: 'https://9gag.mblonyox.com',
         changeOrigin: true
       }

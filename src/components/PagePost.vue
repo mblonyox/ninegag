@@ -10,13 +10,13 @@
           <b-col cols="5" sm="4" md="3"><b-button block :to="{name: 'PageIndex'}">🏠 Home</b-button></b-col>
           <b-col cols="5" sm="4" md="3"><b-button block variant="primary" @click.prevent="nextPost">Next ➡️</b-button></b-col>
         </b-row>
-        <card-content :post="post" v-if="!!post"/>
+        <card-content :post="post" v-if="!!post" :key="post.id" />
         <b-card class="my-5" v-else>
           <div class="text-center">
             <b-spinner label="Loading..."/>
           </div>
         </b-card>
-        <post-comments :id="id"></post-comments>
+        <post-comments :id="id" :key="id"/>
       </b-col>
     </b-row>
   </b-card>

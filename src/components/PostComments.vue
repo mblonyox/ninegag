@@ -1,18 +1,22 @@
 <template>
   <div>
+    <b v-if="total">{{total}} Comments</b>
     <hr>
-    <p v-for="comment in comments" :key="comment">{{comment.richtext}}</p>
+    <comments-item v-for="comment in comments" :comment="comment" :key="comment.commentId"/>
+    <infinite-loading @infinite="infiniteHandler" />
   </div>
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading'
+import CommentsItem from './CommentsItem'
+
 export default {
   data: () => ({
     comments: [],
     total: 0,
     hasNext: true,
-    orderScore: true,
-    ref: ''
+    orderScore: true
   }),
   computed: {
     ref () {
@@ -27,17 +31,21 @@ export default {
       query.set('url', 'http://9gag.com/gag/' + this.id)
       query.set('order', this.orderScore ? 'score' : 'ts')
       if (this.ref) query.set('ref', this.ref)
-      fetch('https://comment-cdn.9gag.com/v1/cacheable/comment-list.json?' + query.toString())
+      return fetch('/comment.php/v1/cacheable/comment-list.json?' + query.toString())
         .then(res => res.json())
         .then(res => {
           this.comments = this.comments.concat(res.payload.comments)
           this.total = res.payload.total
           this.hasNext = res.payload.hasNext
         })
+    },
+    infiniteHandler ($state) {
+      if (!this.hasNext) return $state.complete()
+      return this.getComments()
+        .then(() => $state.loaded())
+        .catch($state.error)
     }
   },
-  created () {
-    this.getComments()
-  }
+  components: {InfiniteLoading, CommentsItem}
 }
 </script>
