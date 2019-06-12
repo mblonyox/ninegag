@@ -42,11 +42,20 @@
         </div>
       </b-col>
     </b-row>
-    <div class="my-2">
-      <b-button variant="outline-success">{{post.upVoteCount}} 👍</b-button>
-      <b-button variant="outline-danger">{{post.downVoteCount}} 👎</b-button>
-      <b-button variant="outline-primary">{{post.commentsCount}} 💬</b-button>
-    </div>
+    <b-row class="text-center m-2" align-h="between">
+      <b-col>
+        <b-button variant="outline-success" class="m-1">{{post.upVoteCount}} <br> 👍</b-button>
+      </b-col>
+      <b-col>
+        <b-button variant="outline-danger" class="m-1">{{post.downVoteCount}} <br> 👎</b-button>
+      </b-col>
+      <b-col>
+        <b-button variant="outline-primary" class="m-1">{{post.commentsCount}} <br> 💬</b-button>
+      </b-col>
+      <b-col>
+        <b-button variant="outline-dark" class="m-1" @click.prevent="sharePost">Share <br> 🔗</b-button>
+      </b-col>
+    </b-row>
   </b-card>
 </template>
 
@@ -62,6 +71,17 @@ export default {
     },
     visibilityChanged (isVisible) {
       if (!isVisible) this.$refs.video.pause()
+    },
+    sharePost () {
+      if (navigator.share) {
+        navigator.share({
+          title: this.post.title,
+          text: 'Check this funny stuff~',
+          url: '/post/' + this.post.id
+        })
+      } else {
+        alert("Your browser doesn't support Web Share.")
+      }
     }
   },
   props: ['post']
