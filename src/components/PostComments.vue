@@ -1,9 +1,17 @@
 <template>
   <div>
     <b v-if="total">{{total}} Comments</b>
+    <b-form-checkbox v-model="orderScore" switch class="float-right">
+      <b>{{ orderScore ? 'Hot' : 'Fresh' }}</b>
+    </b-form-checkbox>
     <hr>
-    <comments-item v-for="comment in comments" :comment="comment" :key="comment.commentId"/>
-    <infinite-loading @infinite="infiniteHandler" />
+    <comments-item
+      v-for="comment in comments"
+      :key="comment.commentId"
+      :comment="comment"
+      :post-id="id"
+      :order-score="orderScore"/>
+    <infinite-loading @infinite="infiniteHandler" :key="orderScore"/>
   </div>
 </template>
 
@@ -22,6 +30,12 @@ export default {
     ref () {
       if (!this.comments.length) return null
       return this.comments[this.comments.length - 1].orderKey
+    }
+  },
+  watch: {
+    orderScore () {
+      this.comments = []
+      this.hasNext = true
     }
   },
   props: ['id'],
