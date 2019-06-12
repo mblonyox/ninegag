@@ -1,13 +1,12 @@
 <template>
-  <b-media class="mx-2 my-3">
+  <b-media class="mx-2 my-3 comment">
     <b-img
       slot="aside"
       :src="`https://robohash.org/${comment.user.hashedAccountId}`"
       :alt="comment.user.displayName"
-      width="64"
-      height="64"
+      fluid
       rounded="circle"
-      style="background-color: #afafaf;"/>
+      class="avatar" />
     <h5 class="mt-0">{{comment.user.displayName}}</h5>
     <template v-if="comment.type === 'userMedia'">
       <b-img
@@ -77,3 +76,25 @@ export default {
   components: {InfiniteLoading}
 }
 </script>
+
+<style>
+.comment .avatar {
+  background-color: #afafaf;
+  max-width: 4rem;
+  max-height: 4rem;
+}
+
+@media (max-width: 767.98px) {
+  .comment .avatar {
+    max-width: 3rem;
+    max-height: 3rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .comment .avatar {
+    max-width: 2rem;
+    max-height: 2rem;
+  }
+}
+</style>

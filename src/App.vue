@@ -6,7 +6,7 @@
         <b-navbar-brand>9GAG</b-navbar-brand>
       </b-container>
     </b-navbar>
-    <b-container>
+    <b-container class="px-1">
       <router-view :key="$route.query.after"/>
     </b-container>
     <share-modal/>
