@@ -63,14 +63,15 @@ export default {
       if (!isVisible) this.$refs.video.pause()
     },
     sharePost () {
+      const data = {
+        title: this.post.title,
+        text: 'Check this funny stuff~',
+        url: window.location.origin + '/post/' + this.post.id
+      }
       if (navigator.share) {
-        navigator.share({
-          title: this.post.title,
-          text: 'Check this funny stuff~',
-          url: '/post/' + this.post.id
-        })
+        navigator.share(data)
       } else {
-        alert("Your browser doesn't support Web Share.")
+        this.$root.$emit('share::post', data)
       }
     }
   },

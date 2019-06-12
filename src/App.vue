@@ -9,12 +9,16 @@
     <b-container>
       <router-view :key="$route.query.after"/>
     </b-container>
+    <share-modal/>
   </div>
 </template>
 
 <script>
+import ShareModal from './components/ShareModal'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {ShareModal}
 }
 </script>
 
