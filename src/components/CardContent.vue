@@ -42,20 +42,10 @@
         </div>
       </b-col>
     </b-row>
-    <b-row class="text-center m-2" align-h="between">
-      <b-col>
-        <b-button variant="outline-success" class="m-1">{{post.upVoteCount}} <br> 👍</b-button>
-      </b-col>
-      <b-col>
-        <b-button variant="outline-danger" class="m-1">{{post.downVoteCount}} <br> 👎</b-button>
-      </b-col>
-      <b-col>
-        <b-button variant="outline-primary" class="m-1">{{post.commentsCount}} <br> 💬</b-button>
-      </b-col>
-      <b-col>
-        <b-button variant="outline-dark" class="m-1" @click.prevent="sharePost">Share <br> 🔗</b-button>
-      </b-col>
-    </b-row>
+    <div class="my-2 clearfix">
+      <span class="text-success">{{post.upVoteCount}} 👍</span> ⚫ <span class="text-danger">{{post.downVoteCount}} 👎</span> ⚫ {{post.commentsCount}} 💬
+      <b-button variant="outline-dark" class="float-right" @click.prevent="sharePost">Share</b-button>
+    </div>
   </b-card>
 </template>
 
