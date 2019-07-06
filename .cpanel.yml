@@ -1,3 +1,4 @@
 ---
 deployment:
-  - /bin/cp -R . $HOME/9gag.mblonyox.com
+  tasks:
+    - /bin/cp -R . $HOME/9gag.mblonyox.com
