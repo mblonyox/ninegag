@@ -1,0 +1,3 @@
+---
+deployment:
+  - /bin/cp -R . $HOME/9gag.mblonyox.com
