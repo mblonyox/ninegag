@@ -1,4 +1,10 @@
 ---
 deployment:
   tasks:
-    - /bin/cp -R . $HOME/9gag.mblonyox.com
+    - export DEPLOYPATH=$HOME/9gag.mblonyox.com
+    - /bin/rm -rf $DEPLOYPATH/static
+    - /bin/cp -R static $DEPLOYPATH/static
+    - /bin/cp -u index.html $DEPLOYPATH
+    - /bin/cp -u service-worker.js $DEPLOYPATH
+    - /bin/cp -u api.php $DEPLOYPATH
+    - /bin/cp -u comment.php $DEPLOYPATH

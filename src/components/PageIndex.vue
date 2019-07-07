@@ -46,6 +46,7 @@ export default {
           this.cursor = res.data.nextCursor
           $state.loaded()
         })
+        .catch($state.error)
     }
   },
   created () {
