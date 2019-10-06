@@ -7,19 +7,20 @@
       </b-container>
     </b-navbar>
     <b-container class="px-1">
-      <router-view :key="$route.query.after"/>
+      <router-view :key="$route.query.after" />
     </b-container>
-    <share-modal/>
+    <share-modal />
   </div>
 </template>
 
-<script>
-import ShareModal from './components/ShareModal'
+<script lang="ts">
+import Vue from 'vue';
+import ShareModal from './components/ShareModal.vue';
 
-export default {
+export default Vue.extend({
   name: 'App',
-  components: {ShareModal}
-}
+  components: { ShareModal },
+});
 </script>
 
 <style>

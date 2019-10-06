@@ -16,6 +16,7 @@
             :poster="post.images.image460.url"
             onclick.prevent="this.paused ? this.play() : this.pause();"
             v-observe-visibility="visibilityChanged"
+            v-if="played"
           >
             <source
               :src="post.images.image460sv.vp9Url"
@@ -29,18 +30,40 @@
             />
             <source :src="post.images.image460sv.url" type="video/mp4" />
           </video>
-          <svg
-            class="video-overlay-play-button"
-            viewBox="0 0 200 200"
-            alt="Play video"
-            @click="onClickPlay"
-            v-if="!played"
-          >
-            <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff" />\
-            <polygon points="70, 55 70, 145 145, 100" fill="#fff" />
-          </svg>
+          <template v-else>
+            <b-img-lazy
+              :src="post.images.image460.url"
+              :alt="post.title"
+              blank-color="grey"
+              :width="post.images.image460.width"
+              :height="post.images.image460.height"
+              :blank-height="post.images.image460.height"
+              :blank-width="post.images.image460.width"
+              center
+              fluid-grow
+            />
+            <svg
+              class="video-overlay-play-button"
+              viewBox="0 0 200 200"
+              alt="Play video"
+              @click="onClickPlay"
+              v-if="!played"
+            >
+              <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff" />\
+              <polygon points="70, 55 70, 145 145, 100" fill="#fff" />
+            </svg>
+          </template>
         </div>
-        <b-img-lazy :src="post.images.image700.url" :alt="post.title" blank-color="grey" :blank-height="post.images.image700.height" center fluid v-else />
+        <b-img-lazy
+          :src="post.images.image700.url"
+          :alt="post.title"
+          blank-color="grey"
+          :blank-height="post.images.image700.height"
+          :blank-width="post.images.image700.width"
+          center
+          fluid-grow
+          v-else
+        />
         <div>
           <b-badge pill v-for="tag in post.tags" :key="tag.url" class="m-1 p-2">{{tag.key}}</b-badge>
         </div>
@@ -55,34 +78,43 @@
   </b-card>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue';
+
+export default Vue.extend({
   data: () => ({
-    played: false
+    played: false,
   }),
   methods: {
-    onClickPlay () {
-      this.played = true
-      this.$refs.video.play()
+    onClickPlay() {
+      this.played = true;
+      this.$nextTick(() => {
+        const videoPlayer = this.$refs.video as HTMLVideoElement;
+        videoPlayer.play();
+      });
     },
-    visibilityChanged (isVisible) {
-      if (!isVisible) this.$refs.video.pause()
+    visibilityChanged(isVisible: boolean) {
+      if (!isVisible) {
+        const videoPlayer = this.$refs.video as HTMLVideoElement;
+        videoPlayer.pause();
+      }
     },
-    sharePost () {
+    sharePost() {
       const data = {
         title: this.post.title,
         text: 'Check this funny stuff~',
-        url: window.location.origin + '/post/' + this.post.id
-      }
+        url: window.location.origin + '/post/' + this.post.id,
+      };
+      const navigator = window.navigator as any;
       if (navigator.share) {
-        navigator.share(data)
+        navigator.share(data);
       } else {
-        this.$root.$emit('share::post', data)
+        this.$root.$emit('share::post', data);
       }
-    }
+    },
   },
-  props: ['post']
-}
+  props: ['post'],
+});
 </script>
 
 <style>
