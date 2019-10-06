@@ -1,0 +1,8 @@
+dist: trusty
+language: node_js
+node_js:
+  - node
+cache: yarn
+script: yarn build
+after_success:
+  - find dist -type f -exec curl -v -u $FTP_USER:$FTP_PASS --ftp-create-dirs -T {} ftp://$FTP_HOST:$FTP_PORT$FTP_PATH{} \;
