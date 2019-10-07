@@ -32,7 +32,9 @@ export default Vue.extend({
   methods: {
     infiniteHandler($state: StateChanger) {
       if (this.posts.length > 20) {
-        return $state.complete();
+        $state.loaded();
+        $state.complete();
+        return;
       }
       this.$store.dispatch('fetchPosts')
         .then($state.loaded)
