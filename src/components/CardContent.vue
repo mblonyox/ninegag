@@ -80,8 +80,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { Post } from '@/common/types';
 
 export default Vue.extend({
+  props: {
+    post: {
+      type: Object as () => Post,
+    },
+  },
   data: () => ({
     played: false,
   }),
@@ -113,7 +119,6 @@ export default Vue.extend({
       }
     },
   },
-  props: ['post'],
 });
 </script>
 

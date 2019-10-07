@@ -6,7 +6,7 @@
         <card-content v-for="post in posts" :post="post" :key="post.id" />
         <infinite-loading @infinite="infiniteHandler">
           <div slot="no-more">
-            <b-button block :to="{query: {after}}">More...</b-button>
+            <b-button block :to="{ query: { after } }">More...</b-button>
           </div>
         </infinite-loading>
       </b-col>
@@ -16,36 +16,31 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading, { StateChanger } from 'vue-infinite-loading';
 import CardContent from '@/components/CardContent.vue';
+import { Post } from '@/common/types';
 
 export default Vue.extend({
-  data: () => ({
-    posts: [],
-    cursor: '',
-  }),
   computed: {
+    posts(): Post[] {
+      return this.$store.state.posts;
+    },
     after(): string {
-      return new URLSearchParams(this.cursor).get('after') || '';
+      return this.$store.getters.after;
     },
   },
   methods: {
-    infiniteHandler($state: any) {
+    infiniteHandler($state: StateChanger) {
       if (this.posts.length > 20) {
         return $state.complete();
       }
-      fetch('/api.php/v1/group-posts/group/default/type/hot?' + this.cursor)
-        .then((res) => res.json())
-        .then((res) => {
-          this.posts = this.posts.concat(res.data.posts);
-          this.cursor = res.data.nextCursor;
-          $state.loaded();
-        })
+      this.$store.dispatch('fetchPosts')
+        .then($state.loaded)
         .catch($state.error);
     },
   },
   created() {
-    this.cursor = `after=${this.$route.query.after}&c=${this.$route.query.c}`;
+    this.$store.dispatch('checkPosts', this.$route.query.after);
   },
   components: {
     InfiniteLoading,
