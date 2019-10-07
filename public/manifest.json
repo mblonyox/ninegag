@@ -3,6 +3,7 @@
   "short_name": "9GAG",
   "lang": "en-US",
   "start_url": "/",
+  "orientation": "portrait",
   "display": "standalone",
   "theme_color": "#212529",
   "background_color": "#000000",
