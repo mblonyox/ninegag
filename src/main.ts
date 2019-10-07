@@ -15,8 +15,19 @@ Vue.use(VueObserveVisibility);
 
 Vue.config.productionTip = false;
 
-new Vue({
+const vm = new Vue({
   router,
   store,
   render: (h) => h(App),
 }).$mount('#app');
+
+export function onServiceWorkerUpdate() {
+  vm.$bvModal
+    .msgBoxConfirm('Click "OK" to refresh update.', {
+      title: 'New version installed.',
+      centered: true,
+    })
+    .then((reload) => {
+      if (reload) { window.location.reload(true); }
+    });
+}
