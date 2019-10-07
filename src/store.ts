@@ -1,21 +1,28 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import { Post } from '@/common/types';
+import { Post, SectionMap, PageQuery } from '@/common/types';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    sections: {} as SectionMap,
     posts: [] as Post[],
     cursor: '',
-    pageQuery: '',
-    scrollPosition: 0,
+    pageQuery: {
+      group: 'default',
+      type: 'hot',
+      after: '',
+    } as PageQuery,
   },
   getters: {
     after: (state) => new URLSearchParams(state.cursor).get('after') || '',
   },
   mutations: {
+    setSections(state, sections: SectionMap) {
+      state.sections = sections;
+    },
     clearPosts(state) {
       state.posts = [];
     },
@@ -25,14 +32,24 @@ export default new Vuex.Store({
     setCursor(state, cursor: string) {
       state.cursor = cursor;
     },
-    setPageQuery(state, query: string) {
+    setPageQuery(state, query: PageQuery) {
       state.pageQuery = query;
     },
   },
   actions: {
+    fetchSections({ state, commit }) {
+      if (!Object.keys(state.sections).length) {
+        return fetch('/sections.json')
+          .then((res) => res.json())
+          .then((res) => {
+            commit('setSections', res);
+          });
+      }
+      return Promise.resolve();
+    },
     fetchPosts({ state, commit }) {
       return fetch(
-        '/api.php/v1/group-posts/group/default/type/hot?' + state.cursor,
+        `/api.php/v1/group-posts/group/${state.pageQuery.group}/type/${state.pageQuery.type}?${state.cursor}`,
       )
         .then((res) => res.json())
         .then((res) => {
@@ -40,10 +57,13 @@ export default new Vuex.Store({
           commit('setCursor', res.data.nextCursor);
         });
     },
-    checkPosts({ state, commit }, query: string) {
-      if (state.pageQuery !== query) {
-        commit('setPageQuery', query);
-        commit('setCursor', `after=${query}&c=`);
+    checkPosts({ state: {pageQuery}, commit }, payload: PageQuery) {
+      if (pageQuery.group !== payload.group ||
+        pageQuery.type !== payload.type ||
+        pageQuery.after !== payload.after
+      ) {
+        commit('setPageQuery', payload);
+        commit('setCursor', `after=${payload.after}&c=`);
         commit('clearPosts');
       }
     },

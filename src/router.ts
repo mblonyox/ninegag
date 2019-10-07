@@ -9,8 +9,13 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'PageIndex',
+      path: '/:type(hot|trending|fresh)?',
+      name: 'PageIndexDefault',
+      component: PageIndex,
+    },
+    {
+      path: '/:group/:type(hot|trending|fresh)?',
+      name: 'PageIndexGroup',
       component: PageIndex,
     },
     {

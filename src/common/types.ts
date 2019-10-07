@@ -37,6 +37,26 @@ export interface Video extends Media {
   h265Url?: string;
 }
 
+export interface Section {
+  name: string;
+  url: string;
+  description: string;
+  ogImageUrl: string;
+  userUploadEnabled: boolean;
+  isSensitive: boolean;
+  location: string;
+}
+
+export interface SectionMap {
+  [index: string]: Section;
+}
+
+export interface PageQuery {
+  group: string;
+  type: string;
+  after: string;
+}
+
 export interface Comment {
   commentId: string;
   type: string;

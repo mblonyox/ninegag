@@ -4,19 +4,22 @@
       <b-col align-h="center" lg="8" class="px-0">
         <b-row align-h="between">
           <b-col cols="5" sm="4" md="3">
-            <b-button block :to="{name: 'PageIndex'}">🏠 Home</b-button>
+            <b-button block :to="{name: 'PageIndexDefault'}">🏠 Home</b-button>
           </b-col>
           <b-col cols="5" sm="4" md="3">
             <b-button block variant="primary" @click.prevent="nextPost">Next ➡️</b-button>
           </b-col>
         </b-row>
-        <card-content :post="post" v-if="!!post" :key="post.id" />
+        <card-content :post="post" v-if="!!post"/>
         <b-card class="my-5" v-else>
           <div class="text-center">
             <b-spinner label="Loading..." />
           </div>
         </b-card>
         <post-comments :id="id" :key="id" />
+      </b-col>
+      <b-col align-h="center" lg="4" class="d-none d-lg-block">
+        <section-bar></section-bar>
       </b-col>
     </b-row>
   </b-card>
@@ -26,6 +29,7 @@
 import Vue from 'vue';
 import CardContent from '@/components/CardContent.vue';
 import PostComments from '@/components/PostComments.vue';
+import SectionBar from '@/components/SectionBar.vue';
 
 export default Vue.extend({
   data: () => ({
@@ -58,6 +62,6 @@ export default Vue.extend({
     this.getPosts();
   },
   props: ['id'],
-  components: { CardContent, PostComments },
+  components: { CardContent, PostComments, SectionBar },
 });
 </script>

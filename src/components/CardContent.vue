@@ -1,9 +1,11 @@
 <template>
   <b-card class="my-5">
-    <b-card-sub-title>
-      <img :src="post.postSection.imageUrl" :alt="post.postSection.name" style="height: 1.5em;" />
-      {{post.postSection.name}}
-    </b-card-sub-title>
+    <router-link :to="{name: 'PageIndexGroup', params: {group: post.postSection.url.split('/').pop()}}">
+      <b-card-sub-title>
+        <img :src="post.postSection.imageUrl" :alt="post.postSection.name" style="height: 1.5em;" />
+        {{post.postSection.name}}
+      </b-card-sub-title>
+    </router-link>
     <b-card-title class="mt-2">
       <b-link :to="{name: 'PagePost', params: {id: post.id}}" v-html="post.title" />
     </b-card-title>
