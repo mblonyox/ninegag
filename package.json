@@ -1,7 +1,8 @@
 {
   "name": "ninegag",
   "version": "0.1.0",
-  "private": true,
+  "author": {"name": "Sukirno", "email": "mblonyox@gmail.com"},
+  "description": "Ninegag clone by mblonyox.",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
