@@ -18,6 +18,7 @@ export default new Vuex.Store({
   },
   getters: {
     after: (state) => new URLSearchParams(state.cursor).get('after') || '',
+    section: (state) => state.sections[state.pageQuery.group],
   },
   mutations: {
     setSections(state, sections: SectionMap) {

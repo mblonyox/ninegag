@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ group !== 'default' ? group + ' / ' : '' }}{{ type }}</h1>
+    <section-info></section-info>
     <card-content v-for="post in posts" :post="post" :key="post.id" />
     <infinite-loading @infinite="infiniteHandler">
       <div slot="no-more">
@@ -15,6 +15,7 @@ import Vue from 'vue';
 import { BButton } from 'bootstrap-vue';
 import InfiniteLoading, { StateChanger } from 'vue-infinite-loading';
 import CardContent from '@/components/CardContent.vue';
+import SectionInfo from '@/components/SectionInfo.vue';
 import { Post, PageQuery } from '@/common/types';
 
 export default Vue.extend({
@@ -24,12 +25,6 @@ export default Vue.extend({
     },
     after(): string {
       return this.$store.getters.after;
-    },
-    group(): string {
-      return this.$store.state.pageQuery.group;
-    },
-    type(): string {
-      return this.$store.state.pageQuery.type;
     },
   },
   methods: {
@@ -56,6 +51,7 @@ export default Vue.extend({
     BButton,
     InfiniteLoading,
     CardContent,
+    SectionInfo,
   },
 });
 </script>
