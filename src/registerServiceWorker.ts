@@ -24,7 +24,11 @@ if (process.env.NODE_ENV === 'production') {
         installingWorker.onstatechange = () => {
           switch (installingWorker.state) {
             case 'installed':
-              onServiceWorkerUpdate();
+              onServiceWorkerUpdate()
+                .then((confirmed) => confirmed && installingWorker.postMessage('skipwaiting'));
+              break;
+            case 'activated':
+              window.location.reload(true);
               break;
             case 'redundant':
               throw new Error(

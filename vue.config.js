@@ -16,7 +16,9 @@ module.exports = {
       msTileImage: 'img/icons/icon-144x144.png'
     },
     themeColor: "#212529",
+    workboxPluginMode: "InjectManifest",
     workboxOptions: {
+      swSrc: 'src/service-worker.js',
       exclude: [
         /\.map$/,
         /img\/icons\//,
