@@ -21,7 +21,7 @@ const vm = new Vue({
   render: (h) => h(App),
 }).$mount('#app');
 
-export function onServiceWorkerUpdate() {
+export function confirmAppReload() {
   return vm.$bvModal.msgBoxConfirm(
     'Click "OK" to refresh update.',
     {

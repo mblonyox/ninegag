@@ -1,7 +1,7 @@
 /* tslint:disable:no-console */
 
 import { register } from 'register-service-worker';
-import { onServiceWorkerUpdate } from './main';
+import { confirmAppReload } from './main';
 
 if (process.env.NODE_ENV === 'production') {
   register(`${process.env.BASE_URL}service-worker.js`, {
@@ -17,31 +17,14 @@ if (process.env.NODE_ENV === 'production') {
     cached() {
       console.log('Content has been cached for offline use.');
     },
-    updatefound(registration) {
+    updatefound() {
       console.log('New content is downloading.');
-      if (navigator.serviceWorker.controller) {
-        const installingWorker = registration.installing;
-        installingWorker.onstatechange = () => {
-          switch (installingWorker.state) {
-            case 'installed':
-              onServiceWorkerUpdate()
-                .then((confirmed) => confirmed && installingWorker.postMessage('skipwaiting'));
-              break;
-            case 'activated':
-              window.location.reload(true);
-              break;
-            case 'redundant':
-              throw new Error(
-                'The installing service worker became redundant.',
-              );
-            default:
-              break;
-          }
-        };
-      }
     },
-    updated() {
+    updated(registration) {
       console.log('New content is available; please refresh.');
+      const waitingWorker = registration.waiting
+      confirmAppReload().then((confirmed) => confirmed && waitingWorker.postMessage('skipwaiting'));
+      navigator.serviceWorker.oncontrollerchange = () => { window.location.reload(true); };
     },
     offline() {
       console.log(
