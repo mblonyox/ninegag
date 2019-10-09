@@ -24,7 +24,8 @@ module.exports = {
         /img\/icons\//,
         /favicon\.ico$/,
         /manifest\.json$/,
-        /\.php$/
+        /\.php$/,
+        /^\./
       ]
     }
   }
