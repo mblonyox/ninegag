@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
     },
     updated(registration) {
       console.log('New content is available; please refresh.');
-      const waitingWorker = registration.waiting
+      const waitingWorker = registration.waiting;
       confirmAppReload().then((confirmed) => confirmed && waitingWorker.postMessage('skipwaiting'));
       navigator.serviceWorker.oncontrollerchange = () => { window.location.reload(true); };
     },
