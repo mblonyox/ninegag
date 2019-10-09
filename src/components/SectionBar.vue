@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { BListGroup, BListGroupItem } from 'bootstrap-vue';
 import { SectionMap } from '@/common/types';
 
 export default Vue.extend({
@@ -25,5 +26,6 @@ export default Vue.extend({
   created() {
     this.$store.dispatch('fetchSections');
   },
+  components: { BListGroup, BListGroupItem },
 });
 </script>

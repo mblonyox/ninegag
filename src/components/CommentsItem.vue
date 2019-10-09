@@ -45,9 +45,10 @@
 </template>
 
 <script lang="ts">
-import { Comment } from '../common/types';
 import Vue from 'vue';
+import { BMedia, BImgLazy, BLink } from 'bootstrap-vue';
 import InfiniteLoading from 'vue-infinite-loading';
+import { Comment } from '../common/types';
 
 export default Vue.extend({
   name: 'comments-item',
@@ -94,7 +95,7 @@ export default Vue.extend({
   created() {
     this.children = this.comment.children;
   },
-  components: { InfiniteLoading },
+  components: { BMedia, BImgLazy, BLink, InfiniteLoading },
 });
 </script>
 

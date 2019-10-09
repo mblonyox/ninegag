@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import BootstrapVue from 'bootstrap-vue';
+import { ModalPlugin } from 'bootstrap-vue';
 import VueObserveVisibility from 'vue-observe-visibility';
 
 import App from './App.vue';
@@ -10,7 +10,7 @@ import './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
-Vue.use(BootstrapVue);
+Vue.use(ModalPlugin);
 Vue.use(VueObserveVisibility);
 
 Vue.config.productionTip = false;
@@ -27,6 +27,5 @@ export function onServiceWorkerUpdate() {
     {
       title: 'New version installed.',
       centered: true,
-    }
-  );
+    });
 }

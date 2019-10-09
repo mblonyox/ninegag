@@ -17,10 +17,11 @@
 </template>
 
 <script lang="ts">
-import { Comment } from '../common/types';
 import Vue from 'vue';
+import { BFormCheckbox } from 'bootstrap-vue';
 import InfiniteLoading from 'vue-infinite-loading';
 import CommentsItem from './CommentsItem.vue';
+import { Comment } from '../common/types';
 
 export default Vue.extend({
   data: () => ({
@@ -73,6 +74,6 @@ export default Vue.extend({
         .catch($state.error);
     },
   },
-  components: { InfiniteLoading, CommentsItem },
+  components: { BFormCheckbox, InfiniteLoading, CommentsItem },
 });
 </script>

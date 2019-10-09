@@ -25,6 +25,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import { BModal, BRow, BCol, BLink, BImg } from 'bootstrap-vue';
 
 export default Vue.extend({
   data: () => ({
@@ -67,5 +68,6 @@ export default Vue.extend({
   beforeDestroy() {
     this.$root.$off('share::post', this.onShare);
   },
+  components: { BModal, BRow, BCol, BLink, BImg },
 });
 </script>

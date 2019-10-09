@@ -1,10 +1,10 @@
 <template>
   <b-card class="my-5">
     <router-link :to="{name: 'PageIndexGroup', params: {group: post.postSection.url.split('/').pop()}}">
-      <b-card-sub-title>
+      <h6 class="card-subtitle">
         <img :src="post.postSection.imageUrl" :alt="post.postSection.name" style="height: 1.5em;" />
         {{post.postSection.name}}
-      </b-card-sub-title>
+      </h6>
     </router-link>
     <b-card-title class="mt-2">
       <b-link :to="{name: 'PagePost', params: {id: post.id}}" v-html="post.title" />
@@ -81,7 +81,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { VueConstructor} from 'vue';
+import { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImgLazy, BBadge } from 'bootstrap-vue';
 import { Post } from '@/common/types';
 
 export default Vue.extend({
@@ -121,6 +122,7 @@ export default Vue.extend({
       }
     },
   },
+  components: { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImgLazy, BBadge },
 });
 </script>
 
