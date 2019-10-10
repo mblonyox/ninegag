@@ -5,7 +5,7 @@
       <b-card class="my-3">
         <b-row>
           <b-col align-h="center" lg="8" class="px-0">
-            <router-view :key="routeKey" />
+            <router-view/>
           </b-col>
           <b-col align-h="center" lg="4" class="d-none d-lg-block">
             <section-bar></section-bar>
@@ -26,14 +26,6 @@ import SectionBar from '@/components/SectionBar.vue';
 
 export default Vue.extend({
   name: 'App',
-  computed: {
-    routeKey(): string {
-      return '' +
-        this.$route.params.group +
-        this.$route.params.type +
-        this.$route.query.after;
-    },
-  },
   components: { AppNavbar, ShareModal, SectionBar, BContainer, BCard, BRow, BCol },
 });
 </script>

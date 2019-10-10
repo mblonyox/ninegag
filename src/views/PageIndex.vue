@@ -2,7 +2,7 @@
   <div>
     <section-info></section-info>
     <card-content v-for="post in posts" :post="post" :key="post.id" />
-    <infinite-loading @infinite="infiniteHandler">
+    <infinite-loading @infinite="infiniteHandler" :identifier="$route">
       <div slot="no-more">
         <b-button block :to="{ query: { after } }">More...</b-button>
       </div>
@@ -26,10 +26,24 @@ export default Vue.extend({
     after(): string {
       return this.$store.getters.after;
     },
+    pageQuery(): PageQuery {
+      return {
+        group: this.$route.params.group || 'default',
+        type: this.$route.params.type || 'hot',
+        after: typeof this.$route.query.after !== 'object' && this.$route.query.after || '',
+      };
+    },
+  },
+  watch: {
+    $route() {
+      this.$store.dispatch('checkPosts', this.pageQuery);
+    },
   },
   methods: {
     infiniteHandler($state: StateChanger) {
-      if (this.posts.length > 20) {
+      const navigator: any = window.navigator;
+      const ram = navigator.deviceMemory || 2;
+      if (this.posts.length > ram * 10) {
         $state.loaded();
         $state.complete();
         return;
@@ -40,12 +54,7 @@ export default Vue.extend({
     },
   },
   created() {
-    const payload: PageQuery = {
-      group: this.$route.params.group || 'default',
-      type: this.$route.params.type || 'hot',
-      after: typeof this.$route.query.after !== 'object' && this.$route.query.after || '',
-    };
-    this.$store.dispatch('checkPosts', payload);
+    this.$store.dispatch('checkPosts', this.pageQuery);
   },
   components: {
     BButton,
