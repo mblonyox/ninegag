@@ -2,10 +2,10 @@
   <b-navbar fixed="top" toggleable="md" type="dark" variant="dark">
     <b-container>
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <b-navbar-brand :to="{name: 'PageIndexDefault'}">9GAG</b-navbar-brand>
+      <b-navbar-brand :to="{name: 'PageIndexDefault'}" >9GAG</b-navbar-brand>
     </b-container>
     <b-collapse id="nav_collapse" class="w-100 my-2">
-      <b-navbar-nav>
+      <b-navbar-nav @click="$root.$emit('bv::toggle::collapse', 'nav_collapse');">
         <div class="overflow-auto" style="max-height: 50vh;">
           <section-bar></section-bar>
         </div>
