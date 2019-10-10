@@ -32,7 +32,7 @@ export default Vue.extend({
   }),
   watch: {
     $route(to) {
-      if (to.params.id !== this.post.id) {
+      if (this.post && this.post.id !== to.params.id) {
         this.getPosts();
       }
     },
