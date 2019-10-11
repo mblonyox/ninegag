@@ -7,7 +7,7 @@
       </h6>
     </router-link>
     <b-card-title class="mt-2">
-      <b-link :to="{name: 'PagePost', params: {id: post.id}}" v-html="post.title" />
+      <b-link :to="{name: 'PagePost', params: {id: post.id}}">{{decodedTitle}}</b-link>
     </b-card-title>
     <b-row>
       <b-col class="px-0">
@@ -81,7 +81,8 @@
 </template>
 
 <script lang="ts">
-import Vue, { VueConstructor} from 'vue';
+import Vue from 'vue';
+import he from 'he';
 import { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImgLazy, BBadge } from 'bootstrap-vue';
 import { Post } from '@/common/types';
 
@@ -94,6 +95,11 @@ export default Vue.extend({
   data: () => ({
     played: false,
   }),
+  computed: {
+    decodedTitle(): string {
+      return he.decode(this.post.title);
+    },
+  },
   methods: {
     onClickPlay() {
       this.played = true;

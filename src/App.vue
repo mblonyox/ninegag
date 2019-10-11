@@ -26,6 +26,10 @@ import SectionBar from '@/components/SectionBar.vue';
 
 export default Vue.extend({
   name: 'App',
+  metaInfo: {
+    title: '',
+    titleTemplate: (chunk) => chunk ? `${chunk} | Ninegag` : 'Ninegag',
+  },
   components: { AppNavbar, ShareModal, SectionBar, BContainer, BCard, BRow, BCol },
 });
 </script>

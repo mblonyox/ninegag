@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Meta from 'vue-meta';
 import { ModalPlugin } from 'bootstrap-vue';
 import VueObserveVisibility from 'vue-observe-visibility';
 
@@ -10,6 +11,7 @@ import './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+Vue.use(Meta);
 Vue.use(ModalPlugin);
 Vue.use(VueObserveVisibility);
 

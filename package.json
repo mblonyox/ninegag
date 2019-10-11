@@ -1,7 +1,10 @@
 {
   "name": "ninegag",
   "version": "0.1.0",
-  "author": {"name": "Sukirno", "email": "mblonyox@gmail.com"},
+  "author": {
+    "name": "Sukirno",
+    "email": "mblonyox@gmail.com"
+  },
   "description": "Ninegag clone by mblonyox.",
   "license": "MIT",
   "scripts": {
@@ -11,14 +14,17 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.3",
+    "he": "^1.2.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-infinite-loading": "^2.4.4",
+    "vue-meta": "^2.3.1",
     "vue-observe-visibility": "^0.4.3",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@types/he": "^1.1.0",
     "@vue/cli-plugin-pwa": "^3.11.0",
     "@vue/cli-plugin-typescript": "^3.11.0",
     "@vue/cli-service": "^3.11.0",

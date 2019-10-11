@@ -2,10 +2,12 @@
   <div>
     <b-row align-h="between">
       <b-col cols="5" sm="4" md="3">
-        <b-button block :to="{name: 'PageIndexDefault'}">🏠 Home</b-button>
+        <b-button block :to="{ name: 'PageIndexDefault' }">🏠 Home</b-button>
       </b-col>
       <b-col cols="5" sm="4" md="3">
-        <b-button block variant="primary" @click.prevent="nextPost">Next ➡️</b-button>
+        <b-button block variant="primary" @click.prevent="nextPost"
+          >Next ➡️</b-button
+        >
       </b-col>
     </b-row>
     <card-content :post="post" :key="`post-${id}`" v-if="!!post"/>
@@ -20,6 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import he from 'he';
 import { BRow, BCol, BButton, BCard, BSpinner } from 'bootstrap-vue';
 import CardContent from '@/components/CardContent.vue';
 import PostComments from '@/components/PostComments.vue';
@@ -32,13 +35,42 @@ export default Vue.extend({
   }),
   watch: {
     $route(to) {
-      if (this.post && this.post.id !== to.params.id) {
-        this.getPosts();
+      const $this = this as any;
+      if ($this.post && $this.post.id !== to.params.id) {
+        $this.fetchPosts();
       }
     },
   },
+  metaInfo() {
+    const title: string = 'Ninegag';
+    const description: string = this.post && he.decode(this.post.title) || '';
+    const url: string = window.location.origin + window.location.pathname;
+    const image: string = this.post &&
+                          this.post.images &&
+                          this.post.images.image460 &&
+                          this.post.images.image460.url || '';
+
+    return {
+      title: this.post && he.decode(this.post.title),
+      meta: [
+        { property: 'og:type', content: 'website' },
+        { property: 'og:title', content: title },
+        { property: 'og:url', content: url },
+        { property: 'og:image', content: image },
+        { property: 'og:description', content: description },
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:site', content: '@mblonyox' },
+        { name: 'twitter:title', content: title },
+        { name: 'twitter:image', content: image },
+        { name: 'twitter:description', content: description },
+        { itemprop: 'name', content: title },
+        { itemprop: 'description', content: description },
+        { itemprop: 'image', content: image },
+      ],
+    };
+  },
   methods: {
-    getPosts() {
+    fetchPosts() {
       this.post = null;
       return fetch('/api.php/v1/post?id=' + this.id)
         .then((res) => res.json())
@@ -48,22 +80,33 @@ export default Vue.extend({
         });
     },
     nextPost() {
-      (!this.nextPosts.length ? this.getPosts() : Promise.resolve()).then(
+      const $this = this as any;
+      (!$this.nextPosts.length ? $this.fetchPosts() : Promise.resolve()).then(
         () => {
-          this.post = this.nextPosts.splice(0, 1)[0];
-          this.$router.push({
+          $this.post = $this.nextPosts.splice(0, 1)[0];
+          $this.$router.push({
             name: 'PagePost',
-            params: { id: this.post!.id },
+            params: { id: $this.post!.id },
           });
         },
       );
     },
   },
   created() {
+    const $this = this as any;
     window.scrollTo({ top: 0 });
-    this.getPosts();
+    $this.fetchPosts();
   },
   props: ['id'],
-  components: { BRow, BCol, BButton, BCard, BSpinner, CardContent, PostComments, SectionBar },
+  components: {
+    BRow,
+    BCol,
+    BButton,
+    BCard,
+    BSpinner,
+    CardContent,
+    PostComments,
+    SectionBar,
+  },
 });
 </script>
