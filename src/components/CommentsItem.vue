@@ -18,13 +18,13 @@
         :key="img.hash"
         :src="img.imageMetaByType.type === 'ANIMATED' ? img.imageMetaByType.animated.url : img.imageMetaByType.image.url"
         blank-color="grey"
-        :blank-height="img.imageMetaByType.type === 'ANIMATED' ? img.imageMetaByType.animated.url : img.imageMetaByType.image.height"
-        :blank-width="img.imageMetaByType.type === 'ANIMATED' ? img.imageMetaByType.animated.url : img.imageMetaByType.image.width"
+        :blank-height="img.imageMetaByType.type === 'ANIMATED' ? img.imageMetaByType.animated.height : img.imageMetaByType.image.height"
+        :blank-width="img.imageMetaByType.type === 'ANIMATED' ? img.imageMetaByType.animated.width : img.imageMetaByType.image.width"
         fluid
       />
-      <p v-html="comment.mediaText" />
+      <p>{{ htmlDecode(comment.mediaText) }}</p>
     </template>
-    <p v-html="comment.richtext" v-else />
+    <p v-else>{{ htmlDecode(comment.richtext) }}</p>
     <b-link
       v-if="!showChildren && comment.childrenTotal"
       @click.prevent="showChildren = !showChildren"
@@ -46,6 +46,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import he from 'he';
 import { BMedia, BImgLazy, BLink } from 'bootstrap-vue';
 import InfiniteLoading from 'vue-infinite-loading';
 import { Comment } from '../common/types';
@@ -90,6 +91,9 @@ export default Vue.extend({
       this.getChildren()
         .then(() => $state.loaded())
         .catch($state.error);
+    },
+    htmlDecode(str: string) {
+      return he.decode(str);
     },
   },
   created() {
