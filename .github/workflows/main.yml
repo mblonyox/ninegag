@@ -1,0 +1,18 @@
+name: Build project
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+    - name: Install dependencies
+      run: yarn
+    - name: Build vue
+      run: yarn build
+    - uses: actions/upload-artifact@master
+      with:
+        name: release
+        path: dist 
