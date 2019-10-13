@@ -1,4 +1,4 @@
-name: Build project
+name: Build & deploy project
 
 on: push
 
@@ -12,7 +12,23 @@ jobs:
       run: yarn
     - name: Build vue
       run: yarn build
-    - uses: actions/upload-artifact@master
+    - uses: actions/upload-artifact@v1
       with:
         name: release
         path: dist 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: action/download-artifact@v1
+        with:
+          name: release
+          path: dist
+      - name: Deploy FTP
+        uses: sebastianpopp/ftp-action@v1
+        with:
+          host: "${{ secrets.FTP_HOST }}"
+          user: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          localDir: "dist"
+          remoteDir: "."
