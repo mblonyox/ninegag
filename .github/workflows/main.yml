@@ -25,7 +25,7 @@ jobs:
           name: release
           path: dist
       - name: Deploy FTP
-        uses: sebastianpopp/ftp-action@v1
+        uses: sebastianpopp/ftp-action@master
         with:
           host: "${{ secrets.FTP_HOST }}"
           user: ${{ secrets.FTP_USER }}
