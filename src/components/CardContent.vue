@@ -37,8 +37,13 @@
             v-if="played"
           >
             <source
-              :src="post.images.image460sv.vp9Url"
-              v-if="!!post.images.image460sv.vp9Url"
+              :src="post.images.image460sv.av1Url"
+              v-if="!!post.images.image460sv.av1Url"
+              type="video/webm"
+            />
+            <source
+              :src="post.images.image460sv.vp8Url"
+              v-if="!!post.images.image460sv.vp8Url"
               type="video/webm"
             />
             <source
