@@ -11,13 +11,29 @@
     </b-card-title>
     <b-row>
       <b-col class="px-0">
-        <div class="video-wrapper" v-if="post.type === 'Animated'">
+        <template v-if="failed">
+          <b-img
+            blank
+            blank-color="#eee"
+            :width="post.images.image460.width"
+            :height="post.images.image460.height"
+            fluid-grow
+          ></b-img>
+          <div
+            class="text-center failed-overlay"
+          >
+            <p>Failed to load media.</p>
+            <b-button @click="failed = false">Reload</b-button>
+          </div>
+        </template>
+        <div class="video-wrapper" v-else-if="post.type === 'Animated'">
           <video
             ref="video"
             controls
             :poster="post.images.image460.url"
             onclick.prevent="this.paused ? this.play() : this.pause();"
             v-observe-visibility="visibilityChanged"
+            @error.native="failed = true"
             v-if="played"
           >
             <source
@@ -42,6 +58,7 @@
               :blank-height="post.images.image460.height"
               :blank-width="post.images.image460.width"
               center
+              @error.native="failed = true"
               fluid-grow
             />
             <svg
@@ -62,6 +79,7 @@
           blank-color="grey"
           :blank-height="post.images.image700.height"
           :blank-width="post.images.image700.width"
+          @error.native="failed = true"
           center
           fluid-grow
           v-else
@@ -83,7 +101,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import he from 'he';
-import { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImgLazy, BBadge } from 'bootstrap-vue';
+import { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImg, BImgLazy, BBadge } from 'bootstrap-vue';
 import { Post } from '@/common/types';
 
 export default Vue.extend({
@@ -94,6 +112,7 @@ export default Vue.extend({
   },
   data: () => ({
     played: false,
+    failed: false,
   }),
   computed: {
     decodedTitle(): string {
@@ -128,7 +147,7 @@ export default Vue.extend({
       }
     },
   },
-  components: { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImgLazy, BBadge },
+  components: { BCard, BCardTitle, BLink, BButton, BRow, BCol, BImg, BImgLazy, BBadge },
 });
 </script>
 
@@ -159,5 +178,14 @@ export default Vue.extend({
 
 .video-overlay-play-button:hover {
   opacity: 1;
+}
+
+.failed-overlay {
+  width: 100%;
+  height: 100%;
+  padding: 50px calc(50% - 100px);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>
