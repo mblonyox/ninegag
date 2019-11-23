@@ -39,7 +39,7 @@
             <source
               :src="post.images.image460sv.av1Url"
               v-if="!!post.images.image460sv.av1Url"
-              type="video/webm"
+              type="video/mp4"
             />
             <source
               :src="post.images.image460sv.vp8Url"
