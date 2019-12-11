@@ -4,6 +4,9 @@ $html = file_get_contents('index.html');
 $head = '</head>';
 $meta = '';
 
+$http_host = $_SERVER['HTTP_HOST'];
+$protocol= isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https' : 'http';
+
 $host = 'https://9gag.com';
 $post_id = $_GET['id'];
 
@@ -12,9 +15,9 @@ try {
   $json = json_decode($response, true);
   $post = $json['data']['post'];
 
-  $title = 'Ninegag';
-  $description = html_entity_decode($post['title']);
-  $url = $_SERVER['HTTP_ORIGIN'] . '/post/' . $post_id;
+  $title = html_entity_decode($post['title']);
+  $description = 'Ninegag via Mblonyox';
+  $url = "{$protocol}://{$http_host}/post/{$post_id}";
   $image = $post['images']['image460']['url'];
 
   $meta .= "<meta property=\"og:type\" content=\"website\" />";
