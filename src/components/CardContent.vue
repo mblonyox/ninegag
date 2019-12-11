@@ -116,8 +116,8 @@ export default Vue.extend({
     },
     sharePost() {
       const data = {
-        title: this.post.title,
-        text: 'Check this funny stuff~',
+        title: 'Ninegag via Mblonyox',
+        text: this.post.title,
         url: window.location.origin + '/post/' + this.post.id,
       };
       const navigator = window.navigator as any;

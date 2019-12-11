@@ -37,13 +37,16 @@ export default Vue.extend({
   computed: {
     twitterUrl() {
       const query = new URLSearchParams();
-      query.set('text', `${this.text} - ${this.url}`);
+      query.set('text', this.text);
       query.set('url', this.url);
+      query.set('via', 'mblonyox');
+      query.set('related', '9gag:Official 9GAG');
       return `https://twitter.com/intent/tweet?${query.toString()}`;
     },
     facebookUrl() {
       const query = new URLSearchParams();
-      query.set('t', `${this.text} - ${this.url}`);
+      query.set('title', this.title);
+      query.set('description', this.text);
       query.set('u', this.url);
       return `https://www.facebook.com/sharer/sharer.php?${query.toString()}`;
     },
